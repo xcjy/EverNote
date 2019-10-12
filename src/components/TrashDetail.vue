@@ -7,11 +7,20 @@
 </template>
 
 <script>
+import Auth from '@/api/auth'
+
 export default {
     data(){
         return{
             msg: '回收笔记本详细页'
         }
+    },
+        created(){
+        Auth.getInfo().then(data=>{
+            if(!data.isLogin){
+                this.$router.push({path:'/login'})
+            }
+        })
     }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
    <div id="sidebar">
+       <avatar> </avatar>
        <div class="icons">
         <router-link to="/note/1" title="笔记"> <i class="iconfont icon-note"> </i> </router-link>
         <router-link to="/notebooks" title="笔记本"> <i class="iconfont icon-notebook"> </i> </router-link>
@@ -7,24 +8,35 @@
        </div>
    
 
-    <div class="logout" @click="onLogout">
-        <i class="iconfont icon-logout"> </i>
+    <div class="logout" >
+        <i class="iconfont icon-logout" @click="logout"> </i>
     </div>
 
    </div>
 </template>
 
 <script>
+import avatar from '@/components/Avatar'
+import Auth from '@/api/auth.js'
+
 export default {
-    data(){
-        return{
-            msg: '笔记本详细页'
+   
+    components:{
+        avatar
+    },
+    methods:{
+        logout(){
+            console.log('logout')
+            Auth.logout().then(data=>{
+                console.log(data)
+                this.$router.push({path:'login'})
+            })
         }
     }
 }
 </script>
 
-<style  scoped>
+<style  lang="less" scoped>
 #sidebar{
     position:relative;
     width:60px;
@@ -33,16 +45,14 @@ export default {
 }
 .icons{
     margin-top:15px;
-}
-
-.icons a{
+    a{
     padding:6px 0;
     display: block;
-}
+    }
 
-.icons .router-link-active{
- background-color:#5e6226
-
+    .router-link-active{
+    background-color:#5e6226
+    }
 }
 
 .logout{
